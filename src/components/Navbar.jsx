@@ -8,7 +8,7 @@ function Navbar(){
             <div>
                 <h1>Logo</h1>
             </div>
-            <div className="flex justify-center gap-16text-2xl mr-12">
+            <div className="flex justify-center gap-16 text-2xl mr-12">
                 <Link to="/">Home</Link>
                 <Link to="/menu">Menu</Link>
                 <Link to="/ordernow">Order now</Link>
