@@ -2,9 +2,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 
-function Menu() {
+function Menu({cart,setcart}) {
   const [categoryselected,setcategoryselected] = useState("Starters")
-  const [cart,setcart] = useState([])
   const menuItems = [
     // Starters
     { name: "Chicken 65", price: 123, category: "Starters" },
@@ -139,9 +138,9 @@ function Menu() {
         <h3>{price}</h3>
         {existing ? (
           <div className="flex justify-center gap-5">
-            <button onClick={()=> decrease(name)}>-</button>
+            <button onClick={()=> decrease(name)} className="hover:cursor-pointer">-</button>
             <p>{existing.qty}</p>
-            <button onClick={()=> increase(name)}>+</button>
+            <button onClick={()=> increase(name)} className="hover:cursor-pointer">+</button>
           </div>
         ) : (
           <button onClick={() => Addtocart({name, price, category})}>
