@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
+
 
 function Menu() {
   const [categoryselected,setcategoryselected] = useState("Starters")
@@ -101,14 +103,28 @@ function Menu() {
       ])
     }
   }
-  function increase({name}){
-    cart.map((item) => {
+  function increase(name){
+   setcart( cart.map((item) => {
       if (item.name === name) {
-        return { ...item, qty: item.qty + 1 }
+        return  { ...item, qty: item.qty + 1 }
       }
       return item
-    })
+    }))
 
+  }
+  function decrease(name){
+    const existing = cart.find((item)=> item.name === name)
+    if(existing.qty>1){
+      setcart( cart.map((item) => {
+        if (item.name === name) {
+          return  { ...item, qty: item.qty - 1 }
+        }
+        return item
+      }))
+    }
+    else{
+      setcart(cart.filter((item)=> item.name !== existing.name))
+    }
   }
   function Menucards({name,price,category}){
     
@@ -132,28 +148,45 @@ function Menu() {
             Add to cart
           </button>
         )}
+        
+
                
       </div>
     )
   }
-  
+  const total = cart.reduce((sum,item)=> sum=sum+item.qty,0)
+  const totprice = cart.reduce((sum,item)=> sum=sum+item.qty*item.price,0)
   return (
     <div className="min-h-screen">
       <div>
-        <div className="flex justify-center gap-10">
+        <div className="fixed w-full flex justify-center gap-10 pt-10 text-2xl">
           < Categorybox name={"Starters"}/>
           < Categorybox name={"Biriyani"}/>
           < Categorybox name={"Friedrice"}/>
           < Categorybox name={"Pizza"}/>
           < Categorybox name={"Burger"}/>
         </div>
-        <div className="grid grid-cols-4 gap-10">
+        <div className="grid grid-cols-4 gap-10 pt-30">
 
           {filteritems.map((items)=>(
             < Menucards name ={items.name} price={items.price} category={items.category}/>
           ))}
 
         </div> 
+        {cart.length>0 ? (
+          <div className="fixed bottom-0 w-full h-20 flex justify-between p-10 text-xl">
+            <h1>Total items : {total} | Total price : {totprice}</h1>
+            <Link to="/ordernow" >
+              Order Now
+            </Link>
+          </div>
+        ):(
+          <div>
+            
+          </div>
+        )
+
+        }
       </div>
       
       
